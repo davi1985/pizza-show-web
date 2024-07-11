@@ -1,6 +1,6 @@
 import { Link, LinkProps, useLocation } from 'react-router-dom'
 
-export type NavLinkPros = LinkProps
+type NavLinkPros = LinkProps
 
 export const NavLink = (props: NavLinkPros) => {
   const { pathname } = useLocation()
