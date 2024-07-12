@@ -1,6 +1,7 @@
 import { DollarSign } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { currencyFormatter } from '@/utils/currencyFormatter'
 
 export const MonthRevenue = () => {
   return (
@@ -13,7 +14,9 @@ export const MonthRevenue = () => {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">R$ 1248,60</span>
+        <span className="text-2xl font-bold tracking-tight">
+          {currencyFormatter(1230.8)}
+        </span>
         <p className="text-xs text-muted-foreground">
           <span className="data:text-emerald-400 font-medium text-emerald-500">
             +2%
