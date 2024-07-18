@@ -17,8 +17,12 @@ export type Order = {
 
 type Meta = {
   pageIndex: number
-  perPager: number
+  perPage: number
   totalCount: number
+}
+
+type GetOrdersParams = {
+  pageIndex?: number | null
 }
 
 type GetOrdersResponse = {
@@ -26,10 +30,10 @@ type GetOrdersResponse = {
   meta: Meta
 }
 
-export const getOrders = async () => {
+export const getOrders = async ({ pageIndex }: GetOrdersParams) => {
   const { data } = await api.get<GetOrdersResponse>('/orders', {
     params: {
-      pageIndex: 0,
+      pageIndex,
     },
   })
 
