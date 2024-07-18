@@ -29,7 +29,7 @@ export const OrderTableRow = ({ order }: OrderTableRowProps) => (
     </TableCell>
 
     <TableCell className="font-mono text-xs font-medium">
-      rgfdesvbtrwwdccqwaawe
+      {order.orderId}
     </TableCell>
 
     <TableCell className="text-muted-foreground">
