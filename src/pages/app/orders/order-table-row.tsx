@@ -1,12 +1,19 @@
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { ArrowRight, Search, X } from 'lucide-react'
 
+import { Order } from '@/api/get-orders'
+import { OrderStatus } from '@/components/order-status'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { TableCell, TableRow } from '@/components/ui/table'
+import { currencyFormatter } from '@/utils/currencyFormatter'
 
 import { OrderDetails } from './order-details'
 
-export const OrderTableRow = () => (
+type OrderTableRowProps = { order: Order }
+
+export const OrderTableRow = ({ order }: OrderTableRowProps) => (
   <TableRow>
     <TableCell>
       <Dialog>
@@ -25,18 +32,22 @@ export const OrderTableRow = () => (
       rgfdesvbtrwwdccqwaawe
     </TableCell>
 
-    <TableCell className="text-muted-foreground">há 15 minutos</TableCell>
-
-    <TableCell>
-      <div className="flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-slate-400" />
-        <span className="font-medium text-muted-foreground">Pendente</span>
-      </div>
+    <TableCell className="text-muted-foreground">
+      {formatDistanceToNow(order.createdAt, {
+        locale: ptBR,
+        addSuffix: true,
+      })}
     </TableCell>
 
-    <TableCell className="font-medium">John Doe</TableCell>
+    <TableCell>
+      <OrderStatus status={order.status} />
+    </TableCell>
 
-    <TableCell className="font-medium">R$ 149,00</TableCell>
+    <TableCell className="font-medium">{order.customerName}</TableCell>
+
+    <TableCell className="font-medium">
+      {currencyFormatter(order.total)}
+    </TableCell>
 
     <TableCell>
       <Button variant="outline" size="xs">
