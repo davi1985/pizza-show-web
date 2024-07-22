@@ -50,7 +50,7 @@ export const OrderTableRow = ({ order }: OrderTableRowProps) => {
       <TableCell className="font-medium">{order.customerName}</TableCell>
 
       <TableCell className="font-medium">
-        {currencyFormatter(order.total)}
+        {currencyFormatter(order.total / 100)}
       </TableCell>
 
       <TableCell>
