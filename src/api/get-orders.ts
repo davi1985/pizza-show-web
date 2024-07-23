@@ -28,7 +28,7 @@ type GetOrdersParams = {
   status?: string | null
 }
 
-type GetOrdersResponse = {
+export type GetOrdersResponse = {
   orders: Order[]
   meta: Meta
 }
