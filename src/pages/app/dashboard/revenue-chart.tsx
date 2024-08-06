@@ -1,4 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
+import { subDays } from 'date-fns'
+import { useMemo, useState } from 'react'
+import { DateRange } from 'react-day-picker'
 import {
   CartesianGrid,
   Line,
@@ -22,10 +25,28 @@ import { Label } from '@/components/ui/label'
 import { currencyFormatter } from '@/utils/currencyFormatter'
 
 export const RevenueChart = () => {
-  const { data: dailyRevenueInPeriod } = useQuery({
-    queryKey: ['metrics', 'daily-revenue-in-period'],
-    queryFn: getDailyRevenueInPeriod,
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: subDays(new Date(), 7),
+    to: new Date(),
   })
+
+  const { data: dailyRevenueInPeriod } = useQuery({
+    queryKey: ['metrics', 'daily-revenue-in-period', dateRange],
+    queryFn: () =>
+      getDailyRevenueInPeriod({
+        from: dateRange?.from,
+        to: dateRange?.to,
+      }),
+  })
+
+  const chardData = useMemo(
+    () =>
+      dailyRevenueInPeriod?.map((chartItem) => ({
+        date: chartItem.date,
+        receipt: chartItem.receipt / 100,
+      })),
+    [dailyRevenueInPeriod],
+  )
 
   return (
     <Card className="col-span-6">
@@ -39,14 +60,14 @@ export const RevenueChart = () => {
 
         <div className="flex items-center gap-3">
           <Label />
-          <DatePickerRange />
+          <DatePickerRange date={dateRange} onDateChange={setDateRange} />
         </div>
       </CardHeader>
 
       <CardContent>
-        {dailyRevenueInPeriod && (
+        {chardData && (
           <ResponsiveContainer width="100%" height={240}>
-            <LineChart data={dailyRevenueInPeriod} style={{ fontSize: 12 }}>
+            <LineChart data={chardData} style={{ fontSize: 12 }}>
               <XAxis dataKey="date" axisLine={false} tickLine={false} dy={16} />
 
               <YAxis
