@@ -5,6 +5,8 @@ import { getRevenueOrdersAmount } from '@/api/get-month-revenue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { currencyFormatter } from '@/utils/currencyFormatter'
 
+import { MetricCardSkeleton } from './metric-card-skeleton'
+
 export const MonthRevenue = () => {
   const { data: monthRevenue } = useQuery({
     queryKey: ['metrics', 'revenue-orders-amount'],
@@ -21,7 +23,7 @@ export const MonthRevenue = () => {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        {monthRevenue && (
+        {monthRevenue ? (
           <>
             <span className="text-2xl font-bold tracking-tight">
               {currencyFormatter(monthRevenue.receipt / 100)}
@@ -45,6 +47,8 @@ export const MonthRevenue = () => {
               )}
             </p>
           </>
+        ) : (
+          <MetricCardSkeleton />
         )}
       </CardContent>
     </Card>
