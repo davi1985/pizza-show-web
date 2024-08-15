@@ -7,24 +7,27 @@ import { MonthRevenue } from './month-revenue'
 import { PopularProductsChart } from './popular-products-chart'
 import { RevenueChart } from './revenue-chart'
 
-export const Dashboard = () => (
-  <>
-    <Helmet title="Dashboard" />
+export const Dashboard = () => {
+  throw new Error('Error no dashboard')
+  return (
+    <>
+      <Helmet title="Dashboard" />
 
-    <div className="flex flex-col gap-4">
-      <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+      <div className="flex flex-col gap-4">
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
 
-      <div className="grid grid-cols-4 gap-4">
-        <MonthRevenue />
-        <MonthOrdersAmountCard />
-        <DayOrdersAmountCard />
-        <MonthCanceledOrdersAmountCard />
+        <div className="grid grid-cols-4 gap-4">
+          <MonthRevenue />
+          <MonthOrdersAmountCard />
+          <DayOrdersAmountCard />
+          <MonthCanceledOrdersAmountCard />
+        </div>
+
+        <div className="gap4 grid grid-cols-9">
+          <RevenueChart />
+          <PopularProductsChart />
+        </div>
       </div>
-
-      <div className="gap4 grid grid-cols-9">
-        <RevenueChart />
-        <PopularProductsChart />
-      </div>
-    </div>
-  </>
-)
+    </>
+  )
+}
